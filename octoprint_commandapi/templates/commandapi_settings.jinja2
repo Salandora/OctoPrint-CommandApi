@@ -1,0 +1,33 @@
+<form class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label">{{ _('GPIO Init Command') }}</label>
+        <div class="controls">
+            <input type="text" data-bind="value: settings.plugins.commandapi.init_command">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">{{ _('GPIO On Command') }}</label>
+        <div class="controls">
+            <input type="text" data-bind="value: settings.plugins.commandapi.on_command">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">{{ _('GPIO Off Command') }}</label>
+        <div class="controls">
+            <input type="text" data-bind="value: settings.plugins.commandapi.off_command">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">{{ _('GPIO Read State Command') }}</label>
+        <div class="controls">
+            <input type="text" data-bind="value: settings.plugins.commandapi.read_command">
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <label class="checkbox">
+                <input type="checkbox" data-bind="checked: settings.plugins.commandapi.invert_reading"> {{ _('Read State Inverted') }}
+            </label>
+        </div>
+    </div>
+</form>
