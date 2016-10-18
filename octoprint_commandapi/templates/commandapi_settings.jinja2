@@ -6,6 +6,12 @@
         </div>
     </div>
     <div class="control-group">
+        <label class="control-label">{{ _('GPIO Shutdown Command') }}</label>
+        <div class="controls">
+            <input type="text" data-bind="value: settings.plugins.commandapi.shutdown_command">
+        </div>
+    </div>
+    <div class="control-group">
         <label class="control-label">{{ _('GPIO On Command') }}</label>
         <div class="controls">
             <input type="text" data-bind="value: settings.plugins.commandapi.on_command">

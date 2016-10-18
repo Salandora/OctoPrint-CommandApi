@@ -19,10 +19,10 @@ class CommandApiPlugin(SwitchOnOffApiPlugin,
 		self._initialized = False
 
 	##~~ SettingsPlugin mixin
-
 	def get_settings_defaults(self):
 		return dict(
 			init_command = "",
+			shutdown_command = "",
 			on_command = "",
 			off_command = "",
 			read_command = "",
@@ -35,7 +35,6 @@ class CommandApiPlugin(SwitchOnOffApiPlugin,
 		]
 
 	##~~ Softwareupdate hook
-
 	def get_update_information(self):
 		# Define the configuration for your plugin to use with the Software Update
 		# Plugin here. See https://github.com/foosel/OctoPrint/wiki/Plugin:-Software-Update
@@ -68,18 +67,28 @@ class CommandApiPlugin(SwitchOnOffApiPlugin,
 		except:
 			self._logger.exception("{} failed".format(" ".join(command)))
 	
-	def set_power(self, enable):
+	def on_shutdown(self):
+		if not self._initialized:
+			return
+		
+		command = self._settings.get(["shutdown_command"])
+		try:
+			import sarge
+			sarge.run(command)
+		except:
+			self._logger.exception("{} failed".format(" ".join(command)))
+			
+	
+	def set_power(self, power):
 		if not self._initialized:
 			self.setup_gpio()
 			if not self._initialized:
 				return
 		
 		command = ""
-		if enable:
-			self._logger.info("Enabling power supply")
+		if power:
 			command = self._settings.get(["on_command"])
 		else:
-			self._logger.info("Disabling power supply")
 			command = self._settings.get(["off_command"])
 
 		if command is "":
@@ -119,7 +128,7 @@ class CommandApiPlugin(SwitchOnOffApiPlugin,
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
 
-__plugin_name__ = "CommandApi"
+__plugin_name__ = "Command API"
 
 def __plugin_load__():
 	if _disable:
