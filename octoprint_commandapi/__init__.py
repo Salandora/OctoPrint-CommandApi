@@ -57,12 +57,12 @@ class CommandApiPlugin(SwitchOnOffApiPlugin,
 		)
 		
 	def setup_gpio(self):
-		import sarge
 		command = self._settings.get(["init_command"])
 		if command is "":
 			return
 
 		try:
+			import sarge
 			sarge.run(command)
 			self._initialized = True
 		except:
@@ -74,7 +74,6 @@ class CommandApiPlugin(SwitchOnOffApiPlugin,
 			if not self._initialized:
 				return
 		
-		import sarge
 		command = ""
 		if enable:
 			self._logger.info("Enabling power supply")
@@ -87,6 +86,7 @@ class CommandApiPlugin(SwitchOnOffApiPlugin,
 			return
 
 		try:
+			import sarge
 			sarge.run(command)
 		except:
 			self._logger.exception("{} failed".format(" ".join(command)))
@@ -97,12 +97,12 @@ class CommandApiPlugin(SwitchOnOffApiPlugin,
 			if not self._initialized:
 				return
 			
-		import sarge
 		command = self._settings.get(["read_command"])
 		if command is "":
 			return State.Unknown
 
 		try:
+			import sarge
 			output = sarge.get_stdout(command)
 		except:
 			self._logger.exception("{} failed".format(" ".join(command)))
